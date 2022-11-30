@@ -3,13 +3,13 @@
 
 	pros::Controller con1(pros::E_CONTROLLER_MASTER);
 
-	pros::Motor driveLF(1, pros::E_MOTOR_GEARSET_36, true);
-	pros::Motor driveLB(2, pros::E_MOTOR_GEARSET_36, true);
-	pros::Motor driveRF(3, pros::E_MOTOR_GEARSET_36, false);
-	pros::Motor driveRB(4, pros::E_MOTOR_GEARSET_36, false);
-	pros::Motor flywheel(5, pros::E_MOTOR_GEARSET_06, true);
+	pros::Motor driveLF(2, pros::E_MOTOR_GEARSET_36, true);
+	pros::Motor driveLB(4, pros::E_MOTOR_GEARSET_36, true);
+	pros::Motor driveRF(1, pros::E_MOTOR_GEARSET_36, false);
+	pros::Motor driveRB(3, pros::E_MOTOR_GEARSET_36, false);
+	pros::Motor flywheel(10, pros::E_MOTOR_GEARSET_06, true);
 	pros::Motor intake(6, pros::E_MOTOR_GEARSET_18, false);
-	pros::Motor roller(7, pros::E_MOTOR_GEARSET_18, true);
+	pros::Motor roller(5, pros::E_MOTOR_GEARSET_18, true);
 
     pros::MotorGroup driveMotors({driveLF, driveRF, driveLB, driveRB});
 	pros::MotorGroup leftMotors({driveLF, driveLB});
