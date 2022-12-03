@@ -1,5 +1,7 @@
-#include "functions.h"
+
+#include "main.h"
 #include "robot.h"
+#include "auton.h"
 
 /**
  * A callback function for LLEMU's center button.
@@ -25,9 +27,10 @@ void on_center_button() {
  */
 void initialize() {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+	pros::lcd::set_text(1, "here");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+	// autonomous();
 	opcontrol();
 }
 
@@ -36,6 +39,7 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
+
 void disabled() {}
 
 /**
@@ -47,7 +51,9 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+
+void competition_initialize() {
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -60,7 +66,37 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+    // driveMotors.move_relative(10 * 360 / 12.56637061, 100);
+	leftMotors.move_velocity(-100);
+	rightMotors.move_velocity(100);
+    pros::delay(500);
+	driveMotors.move_velocity(0);
+	leftMotors.move_velocity(100);
+	rightMotors.move_velocity(100);
+	pros::delay(1000);
+	leftMotors.move_velocity(-100);
+	rightMotors.move_velocity(100);
+	pros::delay(2000);
+	driveMotors.move_velocity(0);
+	intake.move_velocity(100);
+	pros::delay(300);
+	intake.move_velocity(0);
+	leftMotors.move_velocity(100);
+	rightMotors.move_velocity(-100);
+	pros::delay(2000);
+	driveMotors.move_velocity(0);
+	leftMotors.move_velocity(100);
+	rightMotors.move_velocity(100);
+	pros::delay(500);
+	leftMotors.move_velocity(-100);
+	rightMotors.move_velocity(100);
+	pros::delay(1000);
+	driveMotors.move_velocity(0);
+	intake.move_velocity(100);
+	pros::delay(300);
+	intake.move_velocity(0);
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -74,20 +110,28 @@ void autonomous() {}
  * If the robot is disabled or communications is lost, the
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
+ * 
+ * 
+ * 
  */
+
+
 void opcontrol() {
 
 	int power = 127;
 	bool intakeOn = false;
 	bool flywheelActive = false;
-	bool wallRollerOn = false;
-	bool wallRollerOnRev = false;
+	bool intakeActive = false;
+	bool rollerActive = false;
 
 	while (1) {
-		power = setIntake(power);
+		power = intakeDirection(power);
+		intakeActive = setIntake(power, intakeActive);
 		flywheelActive = setFlywheel(flywheelActive);
-		setDrive();
-		setRoller();
+		index();
+
+		// rollerActive = setRollers(rollerActive);
+		tankDriverControl();
 
 		pros::delay(20);
 	}
