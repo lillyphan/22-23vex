@@ -16,3 +16,14 @@
     extern pros::MotorGroup driveMotors;
     extern pros::MotorGroup leftMotors;
     extern pros::MotorGroup rightMotors;
+
+//SUBSYSTEM FUNCTIONS
+
+    // void setDrive();
+    void setDrive(int leftPct, int rightPct);
+    int intakeDirection(int power);
+    int setIntake(int power, bool intakeOn);
+    bool setRollers(bool rollerOn);
+    bool setFlywheel(bool fwOn);
+    void tankDriverControl();
+    void index();
